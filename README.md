@@ -6,13 +6,13 @@ This repository contains the code that will consume Apache Access log parser/enr
 
 For the purpose of this exercise we are going to use the following public APIS:
 
-###boto 
+### boto 
 enables the script to communicate to AWS S3 to grab the files.
 
-###apache-log-parser
+### apache-log-parser
 A library that can Parse log lines from an apache log file in (almost) any format possible
 
-###maxminddb
+### maxminddb
 A maxmind local DB that provides the meta data detail for a given IP.
 
 
