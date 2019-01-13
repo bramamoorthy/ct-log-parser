@@ -5,3 +5,4 @@ maxminddb==1.4.1
 pandas==0.23.4
 scipy==1.2.0
 ua-parser==0.8.0
+PyMySQL==0.9.3
