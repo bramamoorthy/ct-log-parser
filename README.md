@@ -89,18 +89,20 @@ is an example of what maxmind included with this code base.
 3. For each row grab the IP and use maxmind API to get the IP details using ```maxmind```.
 4. Using ```ua_parser``` create the user agent info.
 5. The details would inclue 
-   IP Address and 
-    - Latitude
-    - Longitude
-    - Country
-    - State
-    - City
-    - Zip code
+
+    IP Address and 
+    * Latitude
+    * Longitude
+    * Country
+    * State
+    * City
+    * Zip code
+    
     
     User Agent and 
-    - Browser
-    - Device type (desktop, mobile, table, robot)
-    - Operating system  
+    * Browser
+    * Device type (desktop, mobile, table, robot)
+    * Operating system  
 6. Once the details are available in a list / dataframe persist it to MysqlDB.
 
 
