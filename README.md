@@ -85,6 +85,7 @@ is an example of what maxmind included with this code base.
 1. Use boto library grab the access log files intot local disk / memory.
 
 ~~2. Using apache-log-parser library parse the log file line items~~
+
 2. Using Pands create a dataframe that has the log info.
 3. For each row grab the IP and use maxmind API to get the IP details using ```maxmind```.
 4. Using ```ua_parser``` create the user agent info.
