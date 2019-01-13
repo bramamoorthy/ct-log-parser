@@ -80,9 +80,10 @@ is an example of what maxmind included with this code base.
 
 
 # HOW: 
-##The objective of this script is very simple as stated below
+## The objective of this script is very simple as stated below
 
-1. Use boto library grab the access log files intot local disk / memory
+1. Use boto library grab the access log files intot local disk / memory.
+
 ~~2. Using apache-log-parser library parse the log file line items~~
 2. Using Pands create a dataframe that has the log info.
 3. For each row grab the IP and use maxmind API to get the IP details using ```maxmind```.
@@ -116,13 +117,17 @@ Once docker is installed the following command can be run to invoike the script
 1. If there are any complication in setting up the localhost with docker mysql, with this approach
 bring up the mysql docker separately to house the table with the following command.
 
-```docker-compose -f docker-compose-mysql.yml up```
+```
+docker-compose -f docker-compose-mysql.yml up
+```
 
 2. Once the ```ctlp_mysql``` is up and running on ```0.0.0.0:3306``` setup the 
 ```config.database_ip``` with that address(for SQL Achemy the default port is 3306. dont worry about it).
 
 3. Run the following command to parse the logs and enrich it with both Geo info and 
 user agent.
-```python3 log_parser.py```
+```
+python3 log_parser.py
+```
 
 
