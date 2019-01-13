@@ -1,0 +1,6 @@
+BUCKET= None
+KEY = None
+VERSION = None
+REGION = None
+ACCESS_KEY = None
+SECRET_KEY = None
