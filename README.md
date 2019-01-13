@@ -34,4 +34,5 @@ The objective of this script is very simple as stated below.
     - Browser
     - Device type (desktop, mobile, table, robot)
     - Operating system  
-    
+5. Once the details are available in a list / dataframe persist it to MysqlDB.
+

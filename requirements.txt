@@ -1,0 +1,6 @@
+boto3==1.9.78
+apache-log-parser==1.7.0
+SQLAlchemy==1.0.4
+maxminddb==1.4.1
+pandas==0.23.4
+scipy==1.2.0
