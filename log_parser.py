@@ -7,6 +7,14 @@ import re
 import pandas as pd
 from ua_parser import user_agent_parser
 
+from pandas.io.json import json_normalize
+
+import maxminddb
+
+
+maxminddb_reader = maxminddb.open_database('data/GeoLite2-City.mmdb')
+
+
 print("Good till here")
 
 LOCAL_FILE_NAME = 'mylocalacess.log'
@@ -35,18 +43,36 @@ def extract_user_agent(x):
     return x[1:-1]
 
 def user_agent_parsing(ua):
-    parsed_value = user_agent_parser.Parse(ua)
-    return parsed_value
+    try:
+        return user_agent_parser.Parse(ua) if ua else ''
+    except:
+        pass
 
-def parse_content(ua, root_key, deired_key):
-    if ua[root_key] and ua[root_key][deired_key]:
-        return ua[root_key][deired_key]
-    else:
-        ''
+def parse_content(ua, root_key, desired_key, deep_key=None):
+    try:
+        if ua[root_key][desired_key] and not deep_key:
+            return ua[root_key][desired_key]
+        elif ua[root_key][desired_key][deep_key]:
+            return ua[root_key][desired_key][deep_key]
+    except:
+        pass
+
+def create_geo_info_from_ip(ip):
+    if not ip:
+        return None
+    try:
+        return maxminddb_reader.get(ip)
+    except:
+        pass
+
+
+
+
 
 
 
 def create_pandas_df():
+    ### Read the log file and parse the content into a Dataframe.
     data = pd.read_csv(
         LOCAL_FILE_NAME,
         sep=r'\s(?=(?:[^"]*"[^"]*")*[^"]*$)(?![^\[]*\])',
@@ -56,9 +82,28 @@ def create_pandas_df():
         usecols=[0, 8],
         names=['ip', 'user_agent'],
         converters={'user_agent': extract_user_agent})
-    print(data.head())
-    parsed_user_agent = data['user_agent'].apply(user_agent_parsing)
 
+    ### Parse the Contents and derive the user agent information.
+    data['parsed_agent'] = data['user_agent'].apply(user_agent_parsing)
+    data['device_brand'] = data['parsed_agent'].apply(parse_content, root_key = 'device', desired_key = 'brand')
+    data['device_model'] = data['parsed_agent'].apply(parse_content, root_key = 'device', desired_key = 'model')
+    data['os_family'] = data['parsed_agent'].apply(parse_content, root_key = 'os', desired_key = 'family')
+    data['user_agent_family'] = data['parsed_agent'].apply(parse_content, root_key = 'user_agent', desired_key = 'family')
+    pd.set_option('display.max_columns', None)
+
+    ### using the IP identify the geo location info using maxmind.
+
+    data['geo_json'] = data['ip'].apply(create_geo_info_from_ip)
+
+    data['latitude'] = data['geo_json'].apply(parse_content, root_key = 'location', desired_key = 'latitude')
+    data['longitude'] = data['geo_json'].apply(parse_content, root_key = 'location', desired_key = 'longitude')
+    data['country'] = data['geo_json'].apply(parse_content, root_key = 'country', desired_key = 'names', deep_key = 'en')
+
+
+    pd.set_option('display.max_columns', None)
+
+
+    print(data.head())
 
 # get_log_file()
 create_pandas_df()
