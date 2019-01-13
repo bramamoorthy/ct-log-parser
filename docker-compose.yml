@@ -6,9 +6,10 @@ services:
       - db
     ports:
       - "5000:5000"
+    network_mode: bridge
 
   db:
-    image: mysql:5.7
+    image: mysql:5.7.21
     ports:
       - "3306:3306"
     environment:
@@ -16,3 +17,6 @@ services:
       MYSQL_DATABASE: ctlp
     volumes:
       - ./mysqldb:/docker-entrypoint-initdb.d/:ro
+    network_mode: bridge
+    hostname: mysql
+    container_name: ctlp_mysql

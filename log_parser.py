@@ -15,6 +15,8 @@ import maxminddb
 maxminddb_reader = maxminddb.open_database('data/GeoLite2-City.mmdb')
 
 
+import sqlalchemy
+
 print("Good till here")
 
 LOCAL_FILE_NAME = 'mylocalacess.log'
@@ -67,7 +69,17 @@ def create_geo_info_from_ip(ip):
 
 
 
-
+def overwrite_log_data(dataframe):
+    database_connection = \
+        sqlalchemy.create_engine(
+            'mysql+mysqlconnector://{0}:{1}@{2}/{3}'.format(
+                config.database_username,
+                config.database_password,
+                config.database_ip,
+                config.database_name
+            )
+        )
+    dataframe.to_sql(con=database_connection, name='access_log_details', if_exists='replace')
 
 
 
@@ -99,11 +111,18 @@ def create_pandas_df():
     data['longitude'] = data['geo_json'].apply(parse_content, root_key = 'location', desired_key = 'longitude')
     data['country'] = data['geo_json'].apply(parse_content, root_key = 'country', desired_key = 'names', deep_key = 'en')
 
+    data = data.drop(columns=['parsed_agent','geo_json'])
 
     pd.set_option('display.max_columns', None)
 
 
     print(data.head())
+    return data
 
-# get_log_file()
-create_pandas_df()
+
+
+get_log_file()
+dataframe = create_pandas_df()
+overwrite_log_data(dataframe)
+
+

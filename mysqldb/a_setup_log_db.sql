@@ -9,6 +9,6 @@ CREATE TABLE `access_log_details` (
   `browser` varchar(100) DEFAULT NULL,
   `latitude` decimal(18,5) DEFAULT NULL,
   `longitude` decimal(18,5) DEFAULT NULL,
-  `country` varchar(50) DEFAULT NULL
-  PRIMARY KEY (`id`),
+  `country` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
