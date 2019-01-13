@@ -1,6 +1,6 @@
 # ct-log-parser
 
-##The Apache Access Log Parser - Enricher
+## The Apache Access Log Parser - Enricher
 
 This repository contains the code that will consume Apache Access log parser/enricher that that fetches an access log from s3, maps IP address to geodata, maps user-agent to device info and store the results in a database.
 
