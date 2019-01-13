@@ -134,3 +134,14 @@ python3 log_parser.py
 ```
 
 
+# What can be improved
+
+* Using AWS SSM Parameter store centralize the configuration to avoid local dependency.
+* Modularize the operations so that UA Parsing can be on its own reusable API
+* Modularize Geo IP info processing to to make it seemless to switch between 3rd party APIs
+* Add more nosetests.
+* This code wont scale for multiple files in S3. If this code has to scale for multiple files
+  persisting the data frame into mysql needs tweaking. 
+  
+
+
