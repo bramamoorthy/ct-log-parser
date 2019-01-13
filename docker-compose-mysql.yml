@@ -1,0 +1,14 @@
+version: "2"
+services:
+  db:
+    image: mysql:5.7.21
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ctlp
+    volumes:
+      - ./mysqldb:/docker-entrypoint-initdb.d/:ro
+    network_mode: bridge
+    hostname: mysql
+    container_name: ctlp_mysql
