@@ -36,3 +36,10 @@ The objective of this script is very simple as stated below.
     - Operating system  
 5. Once the details are available in a list / dataframe persist it to MysqlDB.
 
+
+# Running the script
+**prerequisite is Docker.**
+
+Once docker is installed the following command can be run to invoike the script
+
+```docker-compose up```
